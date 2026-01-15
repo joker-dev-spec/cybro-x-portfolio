@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cybro'X | Cyber Security & Web Developer</title>
+
+    <!-- Google Font (sketch-like) -->
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+    <header class="header">
+        <h1>Kolawole Taiwo</h1>
+        <h1>"Cybro’X"</h1>
+        <p>Cyber Security Specialist & Web Developer</p>
+        <button id="toggleMode">🌙 Toggle Mode</button>
+    </header>
+
+    <main>
+        <section class="card reveal">
+            <h2>About Me</h2>
+            <p>
+                I’m a creative tech professional who builds modern websites and helps keep digital systems safe,
+                combining design, problem-solving, and security to create reliable online experiences.
+            </p>
+        </section>
+
+        <section class="card reveal">
+            <h2>What exaclly I Do</h2>
+            <ul>
+                <li>🔐 Cyber Security & Website Protection</li>
+                <li>💻 Website Design & Development</li>
+                <li>📱 Mobile-Friendly & Responsive Layouts</li>
+                <li>🛡️ Secure and Reliable Online Solutions</li>
+            </ul>
+        </section>
+
+        <section class="card reveal">
+            <h2>Projects</h2>
+            <div class="projects">
+                <div class="project" data-title="Secure Portfolio Website"
+                    data-desc="A personal portfolio built with a security-first mindset and modern design.">
+                    Secure Portfolio Website
+                </div>
+                <div class="project" data-title="Business Website Design"
+                    data-desc="A clean and responsive business website focused on user trust and performance.">
+                    Business Website Design
+                </div>
+                <div class="project" data-title="Web Security Improvements"
+                    data-desc="Security enhancements to protect websites from common online threats.">
+                    Web Security Improvements
+                </div>
+            </div>
+
+        </section>
+
+        <section class="card reveal">
+            <h2>Let’s Work Together</h2>
+            <p>
+                Looking for someone who can build your website and keep it safe?
+                I’m available for freelance and collaborations.
+            </p>
+            <a href="mailto:kolawoletaiwo414@email.com" class="contact-btn">Contact Me</a>
+            <form action="https://formspree.io/f/xreebqjo" method="POST" class="contact-form">
+                <label>
+                    Your email:
+                    <input type="email" name="email" class="contact-input">
+                </label>
+                <label>
+                    Your message:
+                    <textarea name="message" class="contact-textarea"></textarea>
+                </label>
+                <button type="submit" class="contact-submit">Send</button>
+            </form>
+
+
+            <a href="https://wa.me/07043930307" target="_blank" class="whatsapp-btn">
+                💬 Chat on WhatsApp
+            </a>
+
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 Cybro’X — Built with creativity & care</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span id="closePopup">&times;</span>
+            <h3 id="popupTitle"></h3>
+            <p id="popupDesc"></p>
+        </div>
+    </div>
+
+</body>
+
+</html>
