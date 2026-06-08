@@ -44,9 +44,11 @@ body {
     margin-top: 1rem;
     padding: 0.5rem 1rem;
     border: 2px solid var(--accent);
+    border-radius: 50px;
     background: none;
     cursor: pointer;
     font-family: 'Patrick Hand', cursive;
+    color: var(--text);
 }
 
 main {
@@ -91,16 +93,6 @@ ul {
 
 .project:hover {
     transform: scale(1.05);
-}
-
-.contact-btn {
-    display: inline-block;
-    margin-top: 1rem;
-    padding: 0.7rem 1.5rem;
-    border: 2px solid var(--accent);
-    text-decoration: none;
-    color: var(--text);
-    font-family: 'Patrick Hand', cursive;
 }
 
 footer {
@@ -153,41 +145,6 @@ footer {
 
 /* Contact form */
 .contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    margin-top: 1rem;
-}
-
-.contact-form input,
-.contact-form textarea {
-    padding: 0.6rem;
-    border: 2px dashed var(--accent);
-    background: transparent;
-    font-family: 'Patrick Hand', cursive;
-}
-
-.contact-form button {
-    padding: 0.6rem;
-    border: 2px solid var(--accent);
-    background: none;
-    cursor: pointer;
-    font-family: 'Patrick Hand', cursive;
-}
-
-/* WhatsApp button */
-.whatsapp-btn {
-    display: inline-block;
-    margin-top: 1rem;
-    padding: 0.7rem 1.4rem;
-    border: 2px solid #25D366;
-    color: #25D366;
-    text-decoration: none;
-    font-family: 'Patrick Hand', cursive;
-}
-
-/* Contact form alignment & shape fix */
-.contact-form {
     margin-top: 1.5rem;
     display: flex;
     flex-direction: column;
@@ -212,17 +169,54 @@ footer {
     font-family: 'Patrick Hand', cursive;
     font-size: 1rem;
     resize: none;
+    color: var(--text);
 }
 
 .contact-textarea {
     min-height: 120px;
 }
 
+/* Contact actions row */
+.contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    align-items: center;
+}
+
 .contact-submit {
-    align-self: flex-start;
     padding: 0.6rem 1.4rem;
     border: 2px solid var(--accent);
+    border-radius: 50px;
     background: none;
     font-family: 'Patrick Hand', cursive;
+    font-size: 1rem;
+    color: var(--text);
     cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.contact-submit:hover {
+    background: var(--accent);
+    color: var(--bg);
+}
+
+/* WhatsApp button */
+.whatsapp-btn {
+    display: inline-block;
+    padding: 0.6rem 1.4rem;
+    border: 2px solid #25D366;
+    border-radius: 50px;
+    color: #25D366;
+    text-decoration: none;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1rem;
+    margin-top: 0;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.whatsapp-btn:hover {
+    background: #25D366;
+    color: #fff;
 }

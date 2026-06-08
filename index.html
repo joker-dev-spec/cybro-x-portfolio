@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cybro'X | Cyber Security & Web Developer</title>
 
-    <!-- Google Font (sketch-like) -->
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Inter:wght@300;400;600&display=swap"
         rel="stylesheet">
 
@@ -16,9 +15,9 @@
 <body>
 
     <header class="header">
-        <h1>Kolawole Taiwo</h1>
-        <h1>"Cybro’X"</h1>
-        <p>Cyber Security Specialist & Web Developer</p>
+        <h1>Kolawole Rapheal Taiwo</h1>
+        <h1>__Cybro'X__</h1>
+        <p>Cyber Security Specialist / Web Developer</p>
         <button id="toggleMode">🌙 Toggle Mode</button>
     </header>
 
@@ -26,7 +25,7 @@
         <section class="card reveal">
             <h2>About Me</h2>
             <p>
-                I’m a creative tech professional who builds modern websites and helps keep digital systems safe,
+                I'm a creative tech professional who builds modern websites and helps keep digital systems safe,
                 combining design, problem-solving, and security to create reliable online experiences.
             </p>
         </section>
@@ -56,42 +55,41 @@
                     data-desc="Security enhancements to protect websites from common online threats.">
                     Web Security Improvements
                 </div>
-            </div>
 
-        </section>
+            </section>
 
         <section class="card reveal">
-            <h2>Let’s Work Together</h2>
+            <h2>Let's Work Together</h2>
             <p>
                 Looking for someone who can build your website and keep it safe?
-                I’m available for freelance and collaborations.
+                I'm available for freelance and collaborations.
             </p>
-            <a href="mailto:kolawoletaiwo414@email.com" class="contact-btn">Contact Me</a>
-            <form action="https://formspree.io/f/xreebqjo" method="POST" class="contact-form">
+
+            <form class="contact-form" id="contactForm">
                 <label>
-                    Your email:
-                    <input type="email" name="email" class="contact-input">
+                    Your Name:
+                    <input type="text" id="userName" class="contact-input" placeholder="Your name" required>
                 </label>
                 <label>
-                    Your message:
-                    <textarea name="message" class="contact-textarea"></textarea>
+                    Your Email:
+                    <input type="email" id="userEmail" class="contact-input" placeholder="Email..." required>
                 </label>
-                <button type="submit" class="contact-submit">Send</button>
+                <label>
+                    Your Message:
+                    <textarea id="userMessage" class="contact-textarea" placeholder="Write your message here..." required></textarea>
+                </label>
+                <div class="contact-actions">
+                    <button type="button" class="contact-submit" id="sendEmail">📧 Send via Email</button>
+                    <a id="sendWhatsApp" href="#" class="whatsapp-btn">💬 Send via WhatsApp</a>
+                </div>
             </form>
-
-
-            <a href="https://wa.me/07043930307" target="_blank" class="whatsapp-btn">
-                💬 Chat on WhatsApp
-            </a>
-
         </section>
+
     </main>
 
     <footer>
-        <p>© 2026 Cybro’X — Built with creativity & care</p>
+        <p>© 2026 Cybro'X — Built with creativity & care</p>
     </footer>
-
-    <script src="script.js"></script>
 
     <div id="popup" class="popup">
         <div class="popup-content">
@@ -100,6 +98,8 @@
             <p id="popupDesc"></p>
         </div>
     </div>
+
+    <script src="script.js"></script>
 
 </body>
 
