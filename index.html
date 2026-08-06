@@ -4,9 +4,16 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cybro'X | Cyber Security & Web Developer</title>
+    <title>Cybro'X | Cyber Security Specialist & Web Developer</title>
+    <meta name="description" content="Kolawole Rapheal Taiwo — Cybro'X. Cyber security specialist and web developer building secure, modern websites." />
 
-    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Inter:wght@300;400;600&display=swap"
+    <meta property="og:title" content="Cybro'X | Cyber Security Specialist & Web Developer" />
+    <meta property="og:description" content="Secure-by-design websites, built and hardened by Cybro'X." />
+    <meta property="og:type" content="website" />
+
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230d1117'/%3E%3Cpath d='M50 15 L80 28 L80 55 C80 75 65 85 50 90 C35 85 20 75 20 55 L20 28 Z' fill='none' stroke='%2300e5c7' stroke-width='5'/%3E%3Cpath d='M38 50 L47 60 L64 40' fill='none' stroke='%2300e5c7' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" type="image/svg+xml" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;600;700&display=swap"
         rel="stylesheet">
 
     <link rel="stylesheet" href="styles.css" />
@@ -14,15 +21,35 @@
 
 <body>
 
+    <nav class="navbar" id="navbar">
+        <span class="nav-brand">Cybro'X</span>
+        <button class="nav-toggle" id="navToggle" aria-label="Open menu">☰</button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#about" data-nav>About</a></li>
+            <li><a href="#skills" data-nav>Skills</a></li>
+            <li><a href="#projects" data-nav>Projects</a></li>
+            <li><a href="#contact" data-nav>Contact</a></li>
+        </ul>
+        <button id="toggleMode" aria-label="Toggle color mode">🌙</button>
+    </nav>
+
     <header class="header">
+        <div class="scan-frame">
+            <div class="avatar">KT</div>
+            <span class="corner tl"></span>
+            <span class="corner tr"></span>
+            <span class="corner bl"></span>
+            <span class="corner br"></span>
+            <span class="scan-line"></span>
+        </div>
         <h1>Kolawole Rapheal Taiwo</h1>
-        <h1>__Cybro'X__</h1>
-        <p>Cyber Security Specialist / Web Developer</p>
-        <button id="toggleMode">🌙 Toggle Mode</button>
+        <h1 class="brand-line">__Cybro'X__</h1>
+        <p class="tagline"><span id="typedTagline"></span><span class="cursor">|</span></p>
     </header>
 
     <main>
-        <section class="card reveal">
+        <section class="card reveal" id="about">
+            <span class="eyebrow">// about</span>
             <h2>About Me</h2>
             <p>
                 I'm a creative tech professional who builds modern websites and helps keep digital systems safe,
@@ -30,8 +57,9 @@
             </p>
         </section>
 
-        <section class="card reveal">
-            <h2>What exaclly I Do</h2>
+        <section class="card reveal" id="do">
+            <span class="eyebrow">// capabilities</span>
+            <h2>What Exactly I Do</h2>
             <ul>
                 <li>🔐 Cyber Security & Website Protection</li>
                 <li>💻 Website Design & Development</li>
@@ -40,25 +68,64 @@
             </ul>
         </section>
 
-        <section class="card reveal">
+        <section class="card reveal" id="skills">
+            <span class="eyebrow">// stack</span>
+            <h2>Skills</h2>
+            <div class="skills-grid">
+                <div class="skill" data-level="90">
+                    <div class="skill-top"><span>HTML / CSS</span><span class="skill-pct">90%</span></div>
+                    <div class="skill-bar"><div class="skill-fill"></div></div>
+                </div>
+                <div class="skill" data-level="80">
+                    <div class="skill-top"><span>JavaScript</span><span class="skill-pct">80%</span></div>
+                    <div class="skill-bar"><div class="skill-fill"></div></div>
+                </div>
+                <div class="skill" data-level="75">
+                    <div class="skill-top"><span>Web Security</span><span class="skill-pct">75%</span></div>
+                    <div class="skill-bar"><div class="skill-fill"></div></div>
+                </div>
+                <div class="skill" data-level="70">
+                    <div class="skill-top"><span>Network Fundamentals</span><span class="skill-pct">70%</span></div>
+                    <div class="skill-bar"><div class="skill-fill"></div></div>
+                </div>
+                <div class="skill" data-level="65">
+                    <div class="skill-top"><span>Linux / CLI</span><span class="skill-pct">65%</span></div>
+                    <div class="skill-bar"><div class="skill-fill"></div></div>
+                </div>
+                <div class="skill" data-level="85">
+                    <div class="skill-top"><span>Responsive Design</span><span class="skill-pct">85%</span></div>
+                    <div class="skill-bar"><div class="skill-fill"></div></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card reveal" id="projects">
+            <span class="eyebrow">// projects</span>
             <h2>Projects</h2>
             <div class="projects">
-                <div class="project" data-title="Secure Portfolio Website"
-                    data-desc="A personal portfolio built with a security-first mindset and modern design.">
-                    Secure Portfolio Website
+                <div class="project" tabindex="0" data-title="Secure Portfolio Website"
+                    data-desc="A personal portfolio built with a security-first mindset and modern design."
+                    data-tag="Security · Frontend">
+                    <span class="project-tag">Security · Frontend</span>
+                    <span class="project-name">Secure Portfolio Website</span>
                 </div>
-                <div class="project" data-title="Business Website Design"
-                    data-desc="A clean and responsive business website focused on user trust and performance.">
-                    Business Website Design
+                <div class="project" tabindex="0" data-title="Business Website Design"
+                    data-desc="A clean and responsive business website focused on user trust and performance."
+                    data-tag="Design · Frontend">
+                    <span class="project-tag">Design · Frontend</span>
+                    <span class="project-name">Business Website Design</span>
                 </div>
-                <div class="project" data-title="Web Security Improvements"
-                    data-desc="Security enhancements to protect websites from common online threats.">
-                    Web Security Improvements
+                <div class="project" tabindex="0" data-title="Web Security Improvements"
+                    data-desc="Security enhancements to protect websites from common online threats."
+                    data-tag="Hardening · Audit">
+                    <span class="project-tag">Hardening · Audit</span>
+                    <span class="project-name">Web Security Improvements</span>
                 </div>
+            </div>
+        </section>
 
-            </section>
-
-        <section class="card reveal">
+        <section class="card reveal" id="contact">
+            <span class="eyebrow">// contact</span>
             <h2>Let's Work Together</h2>
             <p>
                 Looking for someone who can build your website and keep it safe?
@@ -94,10 +161,13 @@
     <div id="popup" class="popup">
         <div class="popup-content">
             <span id="closePopup">&times;</span>
+            <span id="popupTag" class="popup-tag"></span>
             <h3 id="popupTitle"></h3>
             <p id="popupDesc"></p>
         </div>
     </div>
+
+    <div id="toast" class="toast"></div>
 
     <script src="script.js"></script>
 

@@ -1,15 +1,20 @@
 :root {
     --bg: #f6f4ef;
-    --text: #222;
+    --text: #1c1c1c;
     --card: #ffffff;
     --accent: #000;
+    --signal: #0a8f7d;
+    --signal-soft: rgba(10, 143, 125, 0.15);
+    --mono: 'JetBrains Mono', monospace;
 }
 
 body.dark {
-    --bg: #121212;
-    --text: #f5f5f5;
-    --card: #1e1e1e;
+    --bg: #0d1117;
+    --text: #e6edf3;
+    --card: #151b23;
     --accent: #fff;
+    --signal: #00e5c7;
+    --signal-soft: rgba(0, 229, 199, 0.12);
 }
 
 * {
@@ -21,36 +26,171 @@ body {
     font-family: 'Inter', sans-serif;
     background: var(--bg);
     color: var(--text);
-    transition: all 0.3s ease;
+    transition: background 0.3s ease, color 0.3s ease;
+    scroll-behavior: smooth;
 }
 
-.header {
-    text-align: center;
-    padding: 3rem 1rem;
-    border-bottom: 2px dashed var(--accent);
+a { color: inherit; }
+
+/* ---------- Navbar ---------- */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.9rem 1.5rem;
+    background: var(--bg);
+    border-bottom: 1px solid var(--signal-soft);
+    backdrop-filter: blur(6px);
 }
 
-.header h1 {
-    font-family: 'Patrick Hand', cursive;
-    font-size: 3rem;
-    margin-bottom: 0.3rem;
+.nav-brand {
+    font-family: var(--mono);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--signal);
 }
 
-.header p {
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links a {
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+    color: var(--text);
+    opacity: 0.7;
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
+    transition: opacity 0.2s ease, border-color 0.2s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    opacity: 1;
+    border-color: var(--signal);
+    color: var(--signal);
+}
+
+.nav-toggle {
+    display: none;
+    background: none;
+    border: 1px solid var(--signal-soft);
+    color: var(--text);
+    border-radius: 8px;
+    padding: 0.3rem 0.6rem;
+    cursor: pointer;
     font-size: 1.1rem;
 }
 
 #toggleMode {
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    border: 2px solid var(--accent);
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--signal);
     border-radius: 50px;
     background: none;
     cursor: pointer;
-    font-family: 'Patrick Hand', cursive;
+    font-family: var(--mono);
     color: var(--text);
+    font-size: 0.9rem;
 }
 
+/* ---------- Header / hero ---------- */
+.header {
+    text-align: center;
+    padding: 3.5rem 1rem 3rem;
+    border-bottom: 2px dashed var(--signal-soft);
+}
+
+.scan-frame {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1.5rem;
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--signal);
+    background: var(--signal-soft);
+    border: 1px solid var(--signal);
+}
+
+.corner {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--signal);
+}
+
+.corner.tl { top: -8px; left: -8px; border-right: none; border-bottom: none; }
+.corner.tr { top: -8px; right: -8px; border-left: none; border-bottom: none; }
+.corner.bl { bottom: -8px; left: -8px; border-right: none; border-top: none; }
+.corner.br { bottom: -8px; right: -8px; border-left: none; border-top: none; }
+
+.scan-line {
+    position: absolute;
+    left: 4%;
+    width: 92%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--signal), transparent);
+    top: 0;
+    animation: scan 3s ease-in-out infinite;
+    opacity: 0.9;
+}
+
+@keyframes scan {
+    0% { top: 6%; }
+    50% { top: 90%; }
+    100% { top: 6%; }
+}
+
+.header h1 {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 2.4rem;
+    margin: 0.2rem 0;
+}
+
+.header h1.brand-line {
+    color: var(--signal);
+    font-size: 2rem;
+}
+
+.tagline {
+    font-family: var(--mono);
+    font-size: 1rem;
+    opacity: 0.85;
+    margin-top: 0.6rem;
+    min-height: 1.4rem;
+}
+
+.cursor {
+    display: inline-block;
+    color: var(--signal);
+    animation: blink 1s step-start infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+/* ---------- Layout ---------- */
 main {
     max-width: 900px;
     margin: auto;
@@ -59,22 +199,67 @@ main {
 
 .card {
     background: var(--card);
-    border: 2px dashed var(--accent);
+    border: 2px dashed var(--signal-soft);
     border-radius: 12px;
     padding: 1.5rem;
     margin-bottom: 2rem;
+    scroll-margin-top: 5rem;
+}
+
+.eyebrow {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--signal);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.4rem;
 }
 
 .card h2 {
     font-family: 'Patrick Hand', cursive;
     font-size: 1.8rem;
-    margin-bottom: 0.5rem;
+    margin: 0 0 0.5rem;
 }
 
 ul {
     padding-left: 1.2rem;
 }
 
+/* ---------- Skills ---------- */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem;
+}
+
+.skill-top {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    margin-bottom: 0.4rem;
+}
+
+.skill-pct {
+    color: var(--signal);
+}
+
+.skill-bar {
+    height: 8px;
+    border-radius: 4px;
+    background: var(--signal-soft);
+    overflow: hidden;
+}
+
+.skill-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--signal);
+    border-radius: 4px;
+    transition: width 1.2s ease;
+}
+
+/* ---------- Projects ---------- */
 .projects {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -83,26 +268,44 @@ ul {
 
 .project {
     padding: 1rem;
-    border: 2px dashed var(--accent);
+    border: 2px dashed var(--signal-soft);
     border-radius: 10px;
     text-align: center;
-    font-family: 'Patrick Hand', cursive;
     cursor: pointer;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
-.project:hover {
+.project:hover,
+.project:focus-visible {
     transform: scale(1.05);
+    border-color: var(--signal);
 }
 
+.project-tag {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--signal);
+    letter-spacing: 0.03em;
+}
+
+.project-name {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.1rem;
+}
+
+/* ---------- Footer ---------- */
 footer {
     text-align: center;
     padding: 1.5rem;
-    border-top: 2px dashed var(--accent);
-    font-size: 0.9rem;
+    border-top: 2px dashed var(--signal-soft);
+    font-size: 0.85rem;
+    font-family: var(--mono);
 }
 
-/* Scroll animation */
+/* ---------- Scroll animation ---------- */
 .reveal {
     opacity: 0;
     transform: translateY(40px);
@@ -114,7 +317,7 @@ footer {
     transform: translateY(0);
 }
 
-/* Project popup */
+/* ---------- Project popup ---------- */
 .popup {
     display: none;
     position: fixed;
@@ -127,12 +330,22 @@ footer {
 
 .popup-content {
     background: var(--card);
-    border: 2px dashed var(--accent);
+    border: 2px dashed var(--signal);
     padding: 1.5rem;
     max-width: 400px;
     border-radius: 12px;
-    font-family: 'Patrick Hand', cursive;
     position: relative;
+}
+
+.popup-tag {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--signal);
+}
+
+.popup-content h3 {
+    font-family: 'Patrick Hand', cursive;
+    margin: 0.4rem 0;
 }
 
 #closePopup {
@@ -143,7 +356,7 @@ footer {
     font-size: 1.5rem;
 }
 
-/* Contact form */
+/* ---------- Contact form ---------- */
 .contact-form {
     margin-top: 1.5rem;
     display: flex;
@@ -163,20 +376,25 @@ footer {
     margin-top: 0.4rem;
     padding: 0.7rem;
     width: 100%;
-    border: 2px dashed var(--accent);
+    border: 2px dashed var(--signal-soft);
     border-radius: 10px;
     background: transparent;
-    font-family: 'Patrick Hand', cursive;
+    font-family: 'Inter', sans-serif;
     font-size: 1rem;
     resize: none;
     color: var(--text);
+}
+
+.contact-input:focus,
+.contact-textarea:focus {
+    outline: none;
+    border-color: var(--signal);
 }
 
 .contact-textarea {
     min-height: 120px;
 }
 
-/* Contact actions row */
 .contact-actions {
     display: flex;
     flex-wrap: wrap;
@@ -187,7 +405,7 @@ footer {
 
 .contact-submit {
     padding: 0.6rem 1.4rem;
-    border: 2px solid var(--accent);
+    border: 2px solid var(--signal);
     border-radius: 50px;
     background: none;
     font-family: 'Patrick Hand', cursive;
@@ -198,11 +416,10 @@ footer {
 }
 
 .contact-submit:hover {
-    background: var(--accent);
+    background: var(--signal);
     color: var(--bg);
 }
 
-/* WhatsApp button */
 .whatsapp-btn {
     display: inline-block;
     padding: 0.6rem 1.4rem;
@@ -212,11 +429,75 @@ footer {
     text-decoration: none;
     font-family: 'Patrick Hand', cursive;
     font-size: 1rem;
-    margin-top: 0;
     transition: background 0.2s ease, color 0.2s ease;
 }
 
 .whatsapp-btn:hover {
     background: #25D366;
     color: #fff;
+}
+
+/* ---------- Toast ---------- */
+.toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--signal);
+    color: #04231f;
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    padding: 0.7rem 1.2rem;
+    border-radius: 8px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 2000;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ---------- Focus visibility ---------- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 2px;
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .reveal, .scan-line, .cursor, .skill-fill {
+        transition: none;
+        animation: none;
+    }
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 640px) {
+    .nav-toggle {
+        display: inline-block;
+    }
+    .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: var(--bg);
+        border-bottom: 1px solid var(--signal-soft);
+        padding: 1rem 1.5rem;
+        display: none;
+        gap: 1rem;
+    }
+    .nav-links.open {
+        display: flex;
+    }
+    .header h1 {
+        font-size: 1.9rem;
+    }
 }

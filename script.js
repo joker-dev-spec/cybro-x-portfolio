@@ -3,8 +3,42 @@ const pageBody = document.body;
 
 toggleBtn.addEventListener("click", () => {
     pageBody.classList.toggle("dark");
+    toggleBtn.textContent = pageBody.classList.contains("dark") ? "☀️" : "🌙";
 });
 
+// ---------- Mobile nav ----------
+const navToggle = document.getElementById("navToggle");
+const navLinks = document.getElementById("navLinks");
+
+navToggle.addEventListener("click", () => {
+    navLinks.classList.toggle("open");
+});
+
+navLinks.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => navLinks.classList.remove("open"));
+});
+
+// ---------- Active nav link on scroll ----------
+const sections = document.querySelectorAll("main section[id]");
+const navItems = document.querySelectorAll("[data-nav]");
+
+function setActiveNav() {
+    let current = "";
+    sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= 120 && rect.bottom >= 120) {
+            current = section.id;
+        }
+    });
+    navItems.forEach(link => {
+        link.classList.toggle("active", link.getAttribute("href") === `#${current}`);
+    });
+}
+
+window.addEventListener("scroll", setActiveNav);
+setActiveNav();
+
+// ---------- Scroll reveal ----------
 const reveals = document.querySelectorAll(".reveal");
 
 function revealOnScroll() {
@@ -22,17 +56,63 @@ function revealOnScroll() {
 window.addEventListener("scroll", revealOnScroll);
 revealOnScroll();
 
+// ---------- Skills bar fill on reveal ----------
+const skillFills = document.querySelectorAll(".skill-fill");
+let skillsAnimated = false;
+
+function animateSkills() {
+    const skillsSection = document.getElementById("skills");
+    if (!skillsSection || skillsAnimated) return;
+    const rect = skillsSection.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 100) {
+        skillFills.forEach(fill => {
+            const level = fill.closest(".skill").dataset.level;
+            fill.style.width = `${level}%`;
+        });
+        skillsAnimated = true;
+    }
+}
+
+window.addEventListener("scroll", animateSkills);
+animateSkills();
+
+// ---------- Typing tagline effect ----------
+const taglineEl = document.getElementById("typedTagline");
+const taglineText = "Securing systems. Designing experiences.";
+let typeIndex = 0;
+
+function typeTagline() {
+    if (typeIndex <= taglineText.length) {
+        taglineEl.textContent = taglineText.slice(0, typeIndex);
+        typeIndex++;
+        setTimeout(typeTagline, 45);
+    }
+}
+
+typeTagline();
+
+// ---------- Project popup ----------
 const projects = document.querySelectorAll(".project");
 const popup = document.getElementById("popup");
 const popupTitle = document.getElementById("popupTitle");
 const popupDesc = document.getElementById("popupDesc");
+const popupTag = document.getElementById("popupTag");
 const closePopup = document.getElementById("closePopup");
 
+function openProjectPopup(project) {
+    popupTag.textContent = project.dataset.tag || "";
+    popupTitle.textContent = project.dataset.title;
+    popupDesc.textContent = project.dataset.desc;
+    popup.style.display = "flex";
+}
+
 projects.forEach(project => {
-    project.addEventListener("click", () => {
-        popupTitle.textContent = project.dataset.title;
-        popupDesc.textContent = project.dataset.desc;
-        popup.style.display = "flex";
+    project.addEventListener("click", () => openProjectPopup(project));
+    project.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            openProjectPopup(project);
+        }
     });
 });
 
@@ -40,6 +120,26 @@ closePopup.addEventListener("click", () => {
     popup.style.display = "none";
 });
 
+popup.addEventListener("click", (e) => {
+    if (e.target === popup) popup.style.display = "none";
+});
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") popup.style.display = "none";
+});
+
+// ---------- Toast ----------
+const toast = document.getElementById("toast");
+let toastTimer = null;
+
+function showToast(message) {
+    toast.textContent = message;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 2600);
+}
+
+// ---------- Contact form ----------
 const emailBtn = document.getElementById("sendEmail");
 const whatsappBtn = document.getElementById("sendWhatsApp");
 
@@ -50,10 +150,18 @@ function getFormData() {
     return { name, email, message };
 }
 
+function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
 function validateForm() {
     const { name, email, message } = getFormData();
     if (!name || !email || !message) {
-        alert("Please fill in all fields before sending.");
+        showToast("Fill in all fields before sending.");
+        return false;
+    }
+    if (!isValidEmail(email)) {
+        showToast("Enter a valid email address.");
         return false;
     }
     return true;
