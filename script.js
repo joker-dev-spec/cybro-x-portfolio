@@ -4,6 +4,7 @@ const pageBody = document.body;
 toggleBtn.addEventListener("click", () => {
     pageBody.classList.toggle("dark");
     toggleBtn.textContent = pageBody.classList.contains("dark") ? "☀️" : "🌙";
+    window.dispatchEvent(new CustomEvent("themechange"));
 });
 
 // ---------- Mobile nav ----------
@@ -95,14 +96,18 @@ typeTagline();
 const projects = document.querySelectorAll(".project");
 const popup = document.getElementById("popup");
 const popupTitle = document.getElementById("popupTitle");
-const popupDesc = document.getElementById("popupDesc");
 const popupTag = document.getElementById("popupTag");
+const popupProblem = document.getElementById("popupProblem");
+const popupApproach = document.getElementById("popupApproach");
+const popupResult = document.getElementById("popupResult");
 const closePopup = document.getElementById("closePopup");
 
 function openProjectPopup(project) {
     popupTag.textContent = project.dataset.tag || "";
     popupTitle.textContent = project.dataset.title;
-    popupDesc.textContent = project.dataset.desc;
+    popupProblem.textContent = project.dataset.problem || "";
+    popupApproach.textContent = project.dataset.approach || "";
+    popupResult.textContent = project.dataset.result || "";
     popup.style.display = "flex";
 }
 
@@ -124,8 +129,38 @@ popup.addEventListener("click", (e) => {
     if (e.target === popup) popup.style.display = "none";
 });
 
+// ---------- Avatar lightbox ----------
+const avatarTrigger = document.getElementById("avatarTrigger");
+const avatarLightbox = document.getElementById("avatarLightbox");
+const closeAvatarLightbox = document.getElementById("closeAvatarLightbox");
+
+function openAvatarLightbox() {
+    avatarLightbox.style.display = "flex";
+}
+
+function closeAvatarLightboxFn() {
+    avatarLightbox.style.display = "none";
+}
+
+avatarTrigger.addEventListener("click", openAvatarLightbox);
+avatarTrigger.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openAvatarLightbox();
+    }
+});
+
+closeAvatarLightbox.addEventListener("click", closeAvatarLightboxFn);
+
+avatarLightbox.addEventListener("click", (e) => {
+    if (e.target === avatarLightbox) closeAvatarLightboxFn();
+});
+
 document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") popup.style.display = "none";
+    if (e.key === "Escape") {
+        popup.style.display = "none";
+        closeAvatarLightboxFn();
+    }
 });
 
 // ---------- Toast ----------
@@ -181,4 +216,27 @@ whatsappBtn.addEventListener("click", (e) => {
     const { name, email, message } = getFormData();
     const text = encodeURIComponent(`Hi Cybro'X! 👋\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
     window.open(`https://wa.me/2347043930307?text=${text}`, "_blank");
+});
+
+// ---------- World loader ----------
+const worldLoader = document.getElementById("worldLoader");
+let loaderHidden = false;
+
+function hideLoader() {
+    if (loaderHidden || !worldLoader) return;
+    loaderHidden = true;
+    worldLoader.classList.add("hidden");
+}
+
+window.addEventListener("worldready", hideLoader);
+setTimeout(hideLoader, 7000);
+
+// ---------- LinkedIn placeholder guard ----------
+document.querySelectorAll("#linkedinLink, #linkedinLinkFooter").forEach(link => {
+    link.addEventListener("click", (e) => {
+        if (link.getAttribute("href") === "#") {
+            e.preventDefault();
+            showToast("LinkedIn link not added yet.");
+        }
+    });
 });

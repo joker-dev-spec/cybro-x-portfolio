@@ -2,6 +2,7 @@
     --bg: #f6f4ef;
     --text: #1c1c1c;
     --card: #ffffff;
+    --card-glass: rgba(255, 255, 255, 0.6);
     --accent: #000;
     --signal: #0a8f7d;
     --signal-soft: rgba(10, 143, 125, 0.15);
@@ -12,6 +13,7 @@ body.dark {
     --bg: #0d1117;
     --text: #e6edf3;
     --card: #151b23;
+    --card-glass: rgba(21, 27, 35, 0.55);
     --accent: #fff;
     --signal: #00e5c7;
     --signal-soft: rgba(0, 229, 199, 0.12);
@@ -21,13 +23,43 @@ body.dark {
     box-sizing: border-box;
 }
 
+html {
+    background: var(--bg);
+    height: 100%;
+}
+
 body {
     margin: 0;
+    min-height: 100%;
     font-family: 'Inter', sans-serif;
-    background: var(--bg);
+    background: transparent;
     color: var(--text);
     transition: background 0.3s ease, color 0.3s ease;
     scroll-behavior: smooth;
+}
+
+#bg-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    display: block;
+    pointer-events: none;
+    background: linear-gradient(120deg, var(--bg) 0%, var(--signal-soft) 45%, var(--bg) 100%);
+    background-size: 220% 220%;
+    animation: driftGradient 18s ease-in-out infinite;
+}
+
+@keyframes driftGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.site {
+    position: relative;
+    z-index: 1;
 }
 
 a { color: inherit; }
@@ -42,9 +74,10 @@ a { color: inherit; }
     justify-content: space-between;
     gap: 1rem;
     padding: 0.9rem 1.5rem;
-    background: var(--bg);
+    background: var(--card-glass);
     border-bottom: 1px solid var(--signal-soft);
-    backdrop-filter: blur(6px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .nav-brand {
@@ -92,6 +125,28 @@ a { color: inherit; }
     font-size: 1.1rem;
 }
 
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.resume-btn {
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--signal-soft);
+    border-radius: 50px;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.resume-btn:hover {
+    border-color: var(--signal);
+    color: var(--signal);
+}
+
 #toggleMode {
     padding: 0.4rem 0.8rem;
     border: 1px solid var(--signal);
@@ -115,21 +170,30 @@ a { color: inherit; }
     width: 120px;
     height: 120px;
     margin: 0 auto 1.5rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.scan-frame:hover,
+.scan-frame:focus-visible {
+    transform: scale(1.04);
+    outline: none;
+}
+
+.scan-frame:focus-visible .avatar {
+    box-shadow: 0 0 0 6px var(--bg), 0 0 0 8px var(--signal);
 }
 
 .avatar {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--mono);
-    font-size: 2rem;
-    font-weight: 600;
-    color: var(--signal);
+    display: block;
+    object-fit: cover;
+    object-position: center 22%;
     background: var(--signal-soft);
     border: 1px solid var(--signal);
+    box-shadow: 0 0 0 6px var(--bg);
 }
 
 .corner {
@@ -190,6 +254,44 @@ a { color: inherit; }
     50% { opacity: 0; }
 }
 
+.social-row {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1.4rem 0 0;
+    padding: 0;
+}
+
+.social-row a {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none;
+    color: var(--text);
+    opacity: 0.8;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--signal-soft);
+    border-radius: 50px;
+    transition: opacity 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.social-row a:hover {
+    opacity: 1;
+    border-color: var(--signal);
+    color: var(--signal);
+}
+
+.footer-social {
+    margin-bottom: 1rem;
+}
+
+.footer-social a {
+    padding: 0.35rem 0.9rem;
+}
+
 /* ---------- Layout ---------- */
 main {
     max-width: 900px;
@@ -198,12 +300,14 @@ main {
 }
 
 .card {
-    background: var(--card);
+    background: var(--card-glass);
     border: 2px dashed var(--signal-soft);
     border-radius: 12px;
     padding: 1.5rem;
     margin-bottom: 2rem;
     scroll-margin-top: 5rem;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
 .eyebrow {
@@ -257,6 +361,145 @@ ul {
     background: var(--signal);
     border-radius: 4px;
     transition: width 1.2s ease;
+}
+
+/* ---------- Certifications ---------- */
+.cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+.cert-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.9rem;
+    border: 1px dashed var(--signal-soft);
+    border-radius: 10px;
+}
+
+.cert-icon {
+    font-size: 1.4rem;
+}
+
+.cert-name {
+    margin: 0;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1rem;
+}
+
+.cert-meta {
+    margin: 0.15rem 0 0;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+
+/* ---------- Popup case study ---------- */
+.popup-case {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 0.6rem;
+}
+
+.popup-case p {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.popup-case strong {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    color: var(--signal);
+    margin-bottom: 0.2rem;
+    text-transform: uppercase;
+}
+
+/* ---------- Testimonials ---------- */
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+}
+
+.testimonial {
+    margin: 0;
+    padding: 1rem;
+    border: 1px dashed var(--signal-soft);
+    border-radius: 10px;
+}
+
+.testimonial p {
+    margin: 0 0 0.6rem;
+    font-style: italic;
+    font-size: 0.95rem;
+}
+
+.testimonial footer {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--signal);
+}
+
+/* ---------- Writing list ---------- */
+.writing-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.writing-item {
+    display: flex;
+    flex-direction: column;
+    padding: 0.9rem;
+    border: 1px dashed var(--signal-soft);
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color 0.2s ease;
+}
+
+.writing-item:hover {
+    border-color: var(--signal);
+}
+
+.writing-title {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.1rem;
+}
+
+.writing-meta {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    opacity: 0.7;
+    margin-top: 0.2rem;
+}
+
+/* ---------- World loader ---------- */
+.world-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    color: var(--signal);
+    letter-spacing: 0.05em;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.world-loader.hidden {
+    opacity: 0;
 }
 
 /* ---------- Projects ---------- */
@@ -329,12 +572,39 @@ footer {
 }
 
 .popup-content {
-    background: var(--card);
+    background: var(--card-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 2px dashed var(--signal);
     padding: 1.5rem;
     max-width: 400px;
     border-radius: 12px;
     position: relative;
+}
+
+.avatar-lightbox-content {
+    max-width: min(90vw, 480px);
+    padding: 0.8rem;
+}
+
+.lightbox-img {
+    display: block;
+    width: 100%;
+    max-height: 75vh;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.avatar-lightbox #closeAvatarLightbox {
+    background: var(--card-glass);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: -12px;
+    right: -12px;
 }
 
 .popup-tag {
@@ -471,7 +741,7 @@ textarea:focus-visible {
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
-    .reveal, .scan-line, .cursor, .skill-fill {
+    .reveal, .scan-line, .cursor, .skill-fill, #bg-canvas {
         transition: none;
         animation: none;
     }
@@ -499,5 +769,14 @@ textarea:focus-visible {
     }
     .header h1 {
         font-size: 1.9rem;
+    }
+    .resume-btn span {
+        display: none;
+    }
+    .resume-btn {
+        padding: 0.4rem 0.6rem;
+    }
+    .social-row {
+        flex-wrap: wrap;
     }
 }
