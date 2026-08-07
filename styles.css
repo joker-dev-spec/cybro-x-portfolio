@@ -46,15 +46,7 @@ body {
     z-index: 0;
     display: block;
     pointer-events: none;
-    background: linear-gradient(120deg, var(--bg) 0%, var(--signal-soft) 45%, var(--bg) 100%);
-    background-size: 220% 220%;
-    animation: driftGradient 18s ease-in-out infinite;
-}
-
-@keyframes driftGradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    background: transparent;
 }
 
 .site {
