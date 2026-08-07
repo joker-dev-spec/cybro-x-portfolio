@@ -41,9 +41,10 @@
 
     const GLOBE_COLOR = 0x00ff88;
     const GLOBE_OPACITY = 0.4;
-    const GLOBE_RADIUS = 16;
+    const GLOBE_RADIUS = 26;
 
     const globeGroup = new THREE.Group();
+    globeGroup.position.set(28, -6, 0);
     scene.add(globeGroup);
 
     const wireframeMaterial = new THREE.LineBasicMaterial({
@@ -52,7 +53,7 @@
         opacity: GLOBE_OPACITY
     });
 
-    const wireframeGeometry = new THREE.SphereGeometry(GLOBE_RADIUS, 28, 20);
+    const wireframeGeometry = new THREE.SphereGeometry(GLOBE_RADIUS, 32, 24);
     const wireframe = new THREE.LineSegments(
         new THREE.WireframeGeometry(wireframeGeometry),
         wireframeMaterial
