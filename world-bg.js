@@ -40,7 +40,7 @@
     camera.position.set(0, 0, 62);
 
     const GLOBE_COLOR = 0x00ff88;
-    const GLOBE_OPACITY = 0.4;
+    const GLOBE_OPACITY = 0.75;
     const GLOBE_RADIUS = 26;
 
     const globeGroup = new THREE.Group();
