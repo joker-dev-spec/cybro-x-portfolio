@@ -41,7 +41,7 @@
 
     const GLOBE_COLOR = 0x00ff88;
     const GLOBE_OPACITY = 0.4;
-    const GLOBE_RADIUS = 22;
+    const GLOBE_RADIUS = 16;
 
     const globeGroup = new THREE.Group();
     scene.add(globeGroup);
@@ -52,24 +52,12 @@
         opacity: GLOBE_OPACITY
     });
 
-    const wireframeGeometry = new THREE.SphereGeometry(GLOBE_RADIUS, 32, 24);
+    const wireframeGeometry = new THREE.SphereGeometry(GLOBE_RADIUS, 28, 20);
     const wireframe = new THREE.LineSegments(
         new THREE.WireframeGeometry(wireframeGeometry),
         wireframeMaterial
     );
     globeGroup.add(wireframe);
-
-    const innerGlowMaterial = new THREE.MeshBasicMaterial({
-        color: GLOBE_COLOR,
-        transparent: true,
-        opacity: GLOBE_OPACITY * 0.25,
-        side: THREE.BackSide
-    });
-    const innerGlow = new THREE.Mesh(
-        new THREE.SphereGeometry(GLOBE_RADIUS * 0.98, 32, 24),
-        innerGlowMaterial
-    );
-    globeGroup.add(innerGlow);
 
     const poleGeometry = new THREE.BufferGeometry();
     const polePositions = new Float32Array([
