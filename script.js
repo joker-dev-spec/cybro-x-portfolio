@@ -110,6 +110,7 @@ const popupProblem = document.getElementById("popupProblem");
 const popupApproach = document.getElementById("popupApproach");
 const popupResult = document.getElementById("popupResult");
 const closePopup = document.getElementById("closePopup");
+const popupUrl = document.getElementById("popupUrl");
 
 function openProjectPopup(project) {
     popupTag.textContent = project.dataset.tag || "";
@@ -117,10 +118,22 @@ function openProjectPopup(project) {
     popupProblem.textContent = project.dataset.problem || "";
     popupApproach.textContent = project.dataset.approach || "";
     popupResult.textContent = project.dataset.result || "";
+    if (project.dataset.url) {
+        popupUrl.href = project.dataset.url;
+        popupUrl.style.display = "inline-block";
+    } else {
+        popupUrl.style.display = "none";
+    }
     popup.style.display = "flex";
 }
 
 projects.forEach(project => {
+    if (project.dataset.url) {
+        const liveBadge = document.createElement("span");
+        liveBadge.className = "live-badge";
+        liveBadge.textContent = "● live";
+        project.prepend(liveBadge);
+    }
     project.addEventListener("click", () => openProjectPopup(project));
     project.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
