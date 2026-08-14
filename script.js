@@ -1,9 +1,18 @@
 const toggleBtn = document.getElementById("toggleMode");
 const pageBody = document.body;
 
+const savedTheme = localStorage.getItem("cybrox-theme");
+if (savedTheme === "dark") {
+    pageBody.classList.add("dark");
+    toggleBtn.textContent = "☀️";
+} else {
+    toggleBtn.textContent = "🌙";
+}
+
 toggleBtn.addEventListener("click", () => {
-    pageBody.classList.toggle("dark");
-    toggleBtn.textContent = pageBody.classList.contains("dark") ? "☀️" : "🌙";
+    const dark = pageBody.classList.toggle("dark");
+    toggleBtn.textContent = dark ? "☀️" : "🌙";
+    localStorage.setItem("cybrox-theme", dark ? "dark" : "light");
     window.dispatchEvent(new CustomEvent("themechange"));
 });
 
@@ -238,5 +247,20 @@ document.querySelectorAll("#linkedinLink, #linkedinLinkFooter").forEach(link => 
             e.preventDefault();
             showToast("LinkedIn link not added yet.");
         }
+    });
+});
+
+// ---------- Resume guard ----------
+document.querySelectorAll(".resume-btn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+        fetch("resume.pdf", { method: "HEAD" }).then(res => {
+            if (!res.ok) {
+                e.preventDefault();
+                showToast("Resume not ready yet — check back soon.");
+            }
+        }).catch(() => {
+            e.preventDefault();
+            showToast("Resume not ready yet — check back soon.");
+        });
     });
 });

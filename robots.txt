@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# Replace with your real domain once this site is hosted
-Sitemap: https://joker-dev-spec.github.io/cybro-x-portfolio
+Sitemap: https://joker-dev-spec.github.io/cybro-x-portfolio/sitemap.xml
